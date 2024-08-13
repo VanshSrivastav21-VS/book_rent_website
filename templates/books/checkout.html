@@ -1,0 +1,8 @@
+{% extends "layout/base.html" %}
+{% block body %}
+<h1>Checkout for {{ book.title }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Pay ${{ book.rental_price }}</button>
+</form>
+{% endblock body %}

@@ -1,0 +1,38 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Books</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">  <!-- Adjust path as needed -->
+</head>
+<body>
+    <section>
+        <h1 class="text-center my-4">Book Rental</h1>
+        <ul class="book-list">
+            {% for book in books %}
+            <li class="book-item">
+                <a href="{% url 'view_book' book.id %}" class="book-link">
+                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="book-image" />
+                    <div class="book-info">
+                        <h2>{{ book.title|truncatewords:2 }}</h2>
+                        <p>{{ book.author }}</p>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="text-center">
+            <a href="{% url 'books' %}"><button class="btn btn-primary view-all-btn">VIEW MORE BOOKS</button></a>
+        </div>
+    </section>
+</body>
+</html>
+
+{% endblock body %}
+    

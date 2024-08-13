@@ -1,0 +1,103 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+
+{% block css %}
+<style>
+    .book-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Individual book item styling */
+    .book-item {
+        list-style: none;
+    }
+
+    .book-link {
+        display: block;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 20px;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.3s ease;
+    }
+
+    .book-link:hover {
+        transform: translateY(-5px);
+    }
+
+    .book-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .book-info h2 {
+        font-size: 1.5rem;
+        margin: 15px 0 10px;
+    }
+
+    .book-info p {
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .book-info h2 {
+            font-size: 1.25rem;
+        }
+
+        .book-info p {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .book-info h2 {
+            font-size: 1.1rem;
+        }
+
+        .book-info p {
+            font-size: 0.8rem;
+        }
+
+        .book-image {
+            max-width: 80%;
+            /* Slightly reduce image size on smaller screens */
+        }
+    }
+
+
+</style>
+{% endblock css %}
+
+
+{% block body %}
+<section>
+    <h1 class="text-center my-4">Book Rental</h1>
+    <ul class="book-list">
+        {% for book in books %}
+        <li class="book-item">
+            <a href="{% url 'view_book' book.id %}" class="book-link">
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="book-image" />
+                <div class="book-info">
+                    <h2>{{ book.title|truncatewords:2 }}</h2>
+                    <p>{{ book.author }}</p>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+
+{% endblock body %}

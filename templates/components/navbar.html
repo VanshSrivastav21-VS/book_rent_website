@@ -1,0 +1,82 @@
+{% load static %}
+
+{% block css %}
+<style>
+  .navbar {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .container-fluid .navbar-brand {
+    font-family: century;
+    font-weight: bold;
+    letter-spacing: .1rem;
+    color: rgb(15, 157, 182);
+    transition: .5s;
+  }
+
+  .navbar .collapse ul li a {
+    color: black;
+    font-family: century;
+    text-decoration: none;
+  }
+
+  .collapse .navbar-nav li a:hover {
+    color: rgb(15, 157, 182);
+  }
+</style>
+{% endblock css %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">CraftMyCV</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'books' %}">Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="bi bi-person"></i> {{ user.username }}
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#">Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="#" class="btn btn-outline-dark mr-2">Login</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="btn"
+            style="background-color: rgb(15, 157, 182); margin-left: .5rem; color: white;">Sign-up</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock body %}

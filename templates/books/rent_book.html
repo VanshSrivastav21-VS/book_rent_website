@@ -1,0 +1,136 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block css %}
+<style>
+    /* General Form Styles */
+    .book-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-container {
+        flex: 1;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group input[type="radio"] {
+        margin-right: 5px;
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .button-container {
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+<!-- <h1>Rent or Buy {{ book.title }}</h1> -->
+<div class="container"></div>
+<form method="post" class="book-form">
+    {% csrf_token %}
+    <div class="form-container">
+        <div class="form-group">
+            <label for="name">Book Name:</label>
+            <input type="text" id="name" name="name" value="{{ book.title }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+
+        <div class="form-group">
+            <label for="days">Number of Days:</label>
+            <input type="number" id="days" name="days" min="1" max="30" value="3" required>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" value="{{ book.rental_price }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Payment Option:</label>
+            <div class="radio-group">
+                <input type="radio" id="rent" name="payment_option" value="rent" checked>
+                <label for="rent">Rent</label>
+                <input type="radio" id="buy" name="payment_option" value="buy">
+                <label for="buy">Buy</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button type="submit">Proceed to Payment</button>
+    </div>
+</form>
+</div>
+
+{% endblock body %}
