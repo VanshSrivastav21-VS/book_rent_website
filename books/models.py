@@ -14,7 +14,7 @@ class Book(models.Model):
     rent_end_date = models.DateField(null=True, blank=True)
     category = models.CharField(max_length=255, null=True, blank=True)
     pdf = models.FileField(upload_to='books/pdfs/', null=True, blank=True)  # PDF file field
-
+    
     def __str__(self):
         return self.title
 
@@ -27,3 +27,14 @@ class Rental(models.Model):
 
     def __str__(self):
         return f'Rental: {self.book.title} by {self.user.username}'
+    
+class News(models.Model):
+    title = models.CharField(max_length=200)
+    date = models.DateTimeField()
+    image = models.ImageField(upload_to='news_images/')
+    
+    class Meta:
+        verbose_name_plural = "News"
+        
+    def __str__(self):
+        return self.title

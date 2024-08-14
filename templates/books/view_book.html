@@ -1,85 +1,140 @@
 {% extends "layout/base.html" %}
 {% load static %}
 
-
 {% block css %}
     <style>
         /* General Styles */
-.book-details {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    background-color: #fff;
-}
+        .book-details {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+        }
 
-.book-image img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
+        .book-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.book-info {
-    padding: 20px 0;
-}
+        .book-image img {
+            max-width: 100%;
+            max-height: 400px; /* Set the max height */
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+            object-fit: contain; /* Ensures the image fits within the given dimensions */
+        }
 
-.book-info p {
-    margin: 10px 0;
-}
+        .book-info {
+            flex: 2;
+            padding: 20px 0;
+        }
 
-.actions {
-    margin-top: 20px;
-}
+        .book-info h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+        }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-right: 10px;
-    color: #fff;
-    background-color: #007bff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
+        .book-info p {
+            margin: 10px 0;
+            color: #555;
+            line-height: 1.6;
+            font-size: 18px;
+        }
 
-.btn:hover {
-    background-color: #0056b3;
-}
+        .book-info p.price,
+        .book-info p.rental-price {
+            font-weight: bold;
+            font-size: 20px;
+            color: #000;
+        }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .book-details {
-        padding: 10px;
-    }
+        .actions {
+            margin-top: 30px;
+        }
 
-    .actions {
-        text-align: center;
-    }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-right: 15px;
+            color: #ffffff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+            font-size: 16px;
+        }
 
-    .btn {
-        display: block;
-        margin: 10px auto;
-    }
-}
+        .btn:hover {
+            background-color: #0056b3;
+        }
 
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .book-details {
+                padding: 20px;
+                flex-direction: column;
+            }
+
+            .book-info h1 {
+                font-size: 28px;
+            }
+
+            .actions {
+                text-align: center;
+            }
+
+            .btn {
+                display: block;
+                margin: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Additional Styles */
+        .book-info p.description {
+            margin-bottom: 30px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            margin-left: 0;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
     </style>
 {% endblock css %}
-    
+
 
 {% block body %}
-<div class="book-details">
-    <h1>{{ book.title }}</h1>
+<div class="book-details d-flex">
     <div class="book-image">
         <img src="{{ book.image.url }}" alt="{{ book.title }}">
     </div>
     <div class="book-info">
-        <p>{{ book.description }}</p>
-        <p>Price: ${{ book.price }}</p>
-        <p>Rental Price: ${{ book.rental_price }}</p>
+        <h1>{{ book.title }}</h1>
+        <p class="description">{{ book.description }}</p>
+        <p class="price">Price: ${{ book.price }}</p>
+        <p class="rental-price">Rental Price: ${{ book.rental_price }}</p>
         <div class="actions">
             <a href="{% url 'rent_book' book.id %}" class="btn">Rent</a>
-            <a href="{% url 'checkout' book.id %}" class="btn">Checkout</a>
+            <a href="{% url 'checkout' book.id %}" class="btn btn-secondary">Buy Now</a>
         </div>
     </div>
+</div>
 {% endblock body %}

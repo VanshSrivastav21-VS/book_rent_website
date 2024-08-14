@@ -12,6 +12,7 @@ urlpatterns = [
     path('book/<int:book_id>/checkout/', views.checkout, name='checkout'),
     path('success/<int:book_id>/', views.success, name='success'),
     path('download/<int:book_id>/', views.download_book, name='book_download'),
+    path('news/latest/', views.latest_news, name='latest_news'),
     path('about/', views.about, name='about'),
 ]
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import FileResponse, Http404
-from .models import Book
+from .models import Book, News
 import stripe
 import os
 
@@ -10,16 +10,13 @@ stripe.api_key = 'sk_test_51PXND22NNWfS0Rs5YezOnkHyk7JVsiWKckuUvqe7aGzFYo0pwIL8C
 
 # Create your views here.
 def home(request):
+    news_items = News.objects.all()
     books = Book.objects.all()
-    latest_books = Book.objects.order_by('-id')[:4]  # Fetch the latest 4 books based on their ID
-    context = {'books': latest_books}
-    return render(request, 'books/home.html', context)
+    return render(request, 'books/home.html', {'books': books, 'news_items': news_items})
 
 def books(request):
     books = Book.objects.all().order_by('-id')
     return render(request, 'books/books.html', {'books': books})
-
-
 
 def view_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
@@ -96,6 +93,10 @@ def download_book(request, book_id):
         print(f"Error downloading file: {e}")
         raise Http404("Something went wrong")
     
+
+def latest_news(request):
+    news_items = News.objects.order_by('-date')[:3]
+    return render(request, 'books/latest_news.html', {'news_items': news_items})
 
 
 
