@@ -86,7 +86,6 @@
 {% endblock css %}
 
 {% block body %}
-<!-- <h1>Rent or Buy {{ book.title }}</h1> -->
 <div class="container"></div>
 <form method="post" class="book-form">
     {% csrf_token %}
@@ -112,7 +111,7 @@
         </div>
 
         <div class="form-group">
-            <label for="price">Price:</label>
+            <label for="price">Total Price:</label>
             <input type="text" id="price" name="price" value="{{ book.rental_price }}" readonly>
         </div>
 
@@ -132,5 +131,31 @@
     </div>
 </form>
 </div>
+
+
+{% block js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const daysInput = document.getElementById("days");
+        const priceInput = document.getElementById("price");
+        const basePrice = parseFloat("{{ book.rental_price }}"); // Base price per day
+
+        function updateTotalPrice() {
+            const days = parseInt(daysInput.value);
+            if (days && days > 0) {
+                const totalPrice = basePrice * days;
+                priceInput.value = totalPrice.toFixed(2);
+            }
+        }
+
+        // Initial calculation
+        updateTotalPrice();
+
+        // Update total price whenever the number of days changes
+        daysInput.addEventListener("input", updateTotalPrice);
+    });
+</script>
+{% endblock js %}
+    
 
 {% endblock body %}

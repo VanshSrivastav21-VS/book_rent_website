@@ -1,0 +1,116 @@
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: century;
+        }
+
+        .container {
+            max-width: 500px;
+            margin-top: 5rem;
+            margin-left: 28rem;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgb(15, 157, 182);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 2rem;
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #3d3d3d;
+            padding-bottom: 1px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            width: 90%;
+            padding: 10px;
+            margin-left: 1.5rem;
+            background-color: rgb(15, 157, 182);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: black;
+            color: white;
+            padding-right: 24px;
+            padding-left: 8px;
+        }
+
+        .container .allready-account {
+            color: black;
+            padding-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .container .allready-account p a {
+            color: rgb(15, 157, 182);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Register Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" placeholder="Enter Email" required>
+            </div>
+            <div class="form-group">
+                <label for="password1">Password:</label>
+                <input type="password" id="password1" name="password1" placeholder="Enter Password" required>
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password:</label>
+                <input type="password" id="password2" name="password2" placeholder="Enter Confirm Password" required>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="allready-account">
+            <p> Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+{% endblock body %}

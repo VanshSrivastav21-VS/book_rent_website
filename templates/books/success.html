@@ -1,0 +1,32 @@
+{% extends "layout/base.html" %}
+
+{% block body %}
+<div class="success-container">
+    <h1>Thank you for your purchase!</h1>
+    <p>Your book is now downloading...</p>
+    <p id="download-status" style="display:none;">Download started successfully!</p>
+</div>
+
+{% block js %}
+<script>
+    window.onload = function() {
+        // Create a link element to trigger the download
+        var link = document.createElement('a');
+        link.href = "{% url 'book_download' book_id=book.id %}";  // Replace with your URL pattern for downloading
+        link.download = ''; // You can set a default filename if needed
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Show the download status message
+        var downloadStatus = document.getElementById('download-status');
+        downloadStatus.style.display = 'block';
+
+        // Optional: Delay hiding the message if needed
+        setTimeout(function() {
+            downloadStatus.style.display = 'none';
+        }, 5000); // Adjust the timeout duration as needed
+    }
+</script>
+{% endblock js %}
+{% endblock body %}

@@ -1,8 +1,59 @@
 {% extends "layout/base.html" %}
+
+{% block css %}
+<style>
+    /* Checkout Page Styles */
+    .checkout-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #f8f8f8;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .checkout-header {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .checkout-details {
+        font-size: 18px;
+        margin-bottom: 30px;
+        color: #555;
+    }
+
+    .checkout-form {
+        display: flex;
+        justify-content: center;
+    }
+
+    .checkout-button {
+        padding: 12px 25px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .checkout-button:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock css %}
+
 {% block body %}
-<h1>Checkout for {{ book.title }}</h1>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Pay ${{ book.rental_price }}</button>
-</form>
+<div class="checkout-container">
+    <h1 class="checkout-header">Checkout for {{ book.title }}</h1>
+    <p class="checkout-details">You're about to purchase this book for ${{ book.price }}.</p>
+    <form method="post" class="checkout-form">
+        {% csrf_token %}
+        <button type="submit" class="checkout-button">Pay ${{ book.price }}</button>
+    </form>
+</div>
 {% endblock body %}

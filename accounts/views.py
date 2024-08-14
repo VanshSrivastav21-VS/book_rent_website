@@ -14,7 +14,7 @@ def register_view(request):
 
         if password1 != password2:
             messages.error(request, "Passwords do not match")
-            return redirect('reister')  # Redirect back to signup page
+            return redirect('register')  # Redirect back to signup page
 
         # Check if username is already taken
         if User.objects.filter(username=username).exists():
@@ -33,8 +33,8 @@ def register_view(request):
         messages.success(request, "Account created successfully. You can now login.")
         return redirect('login')  # Redirect to login page after successful signup
 
-    return render(request, 'accounts/login.html')
-    
+    return render(request, 'accounts/register.html')  # Use the correct template for registration
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -46,25 +46,24 @@ def login_view(request):
         else:
             messages.error(request, "Invalid username or password")
             return redirect('login')  # Redirect back to the login page
-    return render(request, 'resumebuilder/home.html')
-    
+    return render(request, 'accounts/login.html')  # Use the correct template for login
+
 def logout_view(request):
     logout(request)
     messages.success(request, "Logged out successfully")
     return redirect('home')
 
-def profile(request):
-   profile, created = Profile.objects.get_or_create(user=request.user)
-   return render(request, 'accounts/profile.html', {'profile': profile})
-
 @login_required
 def view_profile(request):
-    return render(request, 'accounts/profile.html', {'user': request.user})
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    return render(request, 'accounts/profile.html', {'profile': profile})
 
 def setting(request):
     return render(request, 'accounts/setting.html')
 
 def update_settings(request):
+    if request.method == 'POST':
+        # Implement logic to update settings here
+        messages.success(request, "Settings updated successfully")
+        return redirect('setting')
     return render(request, 'accounts/setting.html')
-
-

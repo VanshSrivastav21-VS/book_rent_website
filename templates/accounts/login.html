@@ -1,0 +1,110 @@
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: century;
+    }
+
+    .container {
+      max-width: 380px;
+      margin-top: 9rem;
+      margin-left: 30rem;
+      border-radius: 10px;
+      background-color: white;
+      color: black;
+      box-shadow: 0 0 10px rgb(15, 157, 182);
+    }
+
+    h1 {
+      text-align: center;
+      padding-top: 2rem;
+      margin-bottom: 20px;
+      color: black;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #3d3d3d;
+      padding-bottom: 1px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      width: 89%;
+      padding: 10px;
+      background-color: rgb(15, 157, 182);
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 3px;
+      margin-bottom: 1rem;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: black;
+      color: white;
+      padding-right: 24px;
+      padding-left: 8px;
+    }
+
+    .container .allready-account {
+      color: black;
+      padding-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    .container .allready-account p a {
+      color: rgb(15, 157, 182);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="allready-account">
+      <p> Don't have an account yet? <a href="{% url 'register' %}">Create Account</a></p>
+    </div>
+  </div>
+</body>
+
+</html>
+{% endblock body %}

@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import FileResponse, Http404
 from .models import Book
 import stripe
+import os
 
 
 stripe.api_key = 'sk_test_51PXND22NNWfS0Rs5YezOnkHyk7JVsiWKckuUvqe7aGzFYo0pwIL8Ce2gQ7cFiOPmwbaHr4XVFvhckgEZCziKo55t00z930Tdrc'
@@ -61,11 +63,41 @@ def checkout(request, book_id):
                 'quantity': 1,
             }],
             mode='payment',
-            success_url=request.build_absolute_uri('/success/'),
+            success_url=request.build_absolute_uri(f'/success/{book_id}/'),
             cancel_url=request.build_absolute_uri('/cancel/'),
         )
         return redirect(session.url, code=303)
     return render(request, 'books/checkout.html', {'book': book})
+
+def success(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    # Any additional logic
+    return render(request, 'books/success.html', {'book': book})
+
+def download_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    
+    # Check if the file exists
+    if not book.pdf:
+        raise Http404("File not found")
+    
+    file_path = book.pdf.path  # Make sure this is the correct field for the file
+    
+    # Ensure file exists before attempting to open
+    if not os.path.exists(file_path):
+        raise Http404("File not found")
+    
+    try:
+        # Serve the file as an attachment
+        response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=book.pdf.name)
+        return response
+    except Exception as e:
+        # Log the error for debugging purposes
+        print(f"Error downloading file: {e}")
+        raise Http404("Something went wrong")
+    
+
+
 
 
 

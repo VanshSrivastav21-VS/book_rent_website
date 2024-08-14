@@ -1,82 +1,95 @@
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraftMyCV</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    {% block css %}
+    <style>
+      .navbar {
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+      }
 
-{% block css %}
-<style>
-  .navbar {
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-  }
+      .container-fluid .navbar-brand {
+        /* font-family: century; */
+        font-weight: bold;
+        letter-spacing: .1rem;
+        color: #ac8f58;
+        transition: .5s;
+      }
 
-  .container-fluid .navbar-brand {
-    font-family: century;
-    font-weight: bold;
-    letter-spacing: .1rem;
-    color: rgb(15, 157, 182);
-    transition: .5s;
-  }
+      .navbar .collapse ul li a {
+        color: black;
+        /* font-family: century; */
+        text-decoration: none;
+      }
 
-  .navbar .collapse ul li a {
-    color: black;
-    font-family: century;
-    text-decoration: none;
-  }
-
-  .collapse .navbar-nav li a:hover {
-    color: rgb(15, 157, 182);
-  }
-</style>
-{% endblock css %}
-
-{% block body %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">CraftMyCV</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'books' %}">Books</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
-        {% if user.is_authenticated %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <i class="bi bi-person"></i> {{ user.username }}
-          </a>
-
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li>
-              <hr class="dropdown-divider">
+      .collapse .navbar-nav li a:hover {
+        color: #8c7446;
+      }
+    </style>
+    {% endblock css %}
+</head>
+<body>
+    {% block body %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">RentMyBook</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
             </li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'books' %}">Books</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
           </ul>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a href="#" class="btn btn-outline-dark mr-2">Login</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="btn"
-            style="background-color: rgb(15, 157, 182); margin-left: .5rem; color: white;">Sign-up</a>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-</nav>
-{% endblock body %}
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="bi bi-person"></i> {{ user.username }}
+              </a>
+
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a href="{% url 'login' %}" class="btn btn-outline-dark mr-2">Login</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'register' %}" class="btn"
+                style="background-color: rgb(15, 157, 182); margin-left: .5rem; color: white;">Sign-up</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endblock body %}
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="{% static 'path/to/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
